@@ -29,8 +29,6 @@ import (
 	"testing"
 	"time"
 
-	"golang.org/x/sync/errgroup"
-
 	"github.com/panjf2000/ants/v2"
 )
 
@@ -103,20 +101,20 @@ func BenchmarkChannel(b *testing.B) {
 	}
 }
 
-func BenchmarkErrGroup(b *testing.B) {
+func BenchmarkSemaphoreGroup(b *testing.B) {
 	var wg sync.WaitGroup
-	var pool errgroup.Group
-	pool.SetLimit(PoolCap)
+	sema := make(chan struct{}, PoolCap)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		wg.Add(RunTimes)
 		for j := 0; j < RunTimes; j++ {
-			pool.Go(func() error {
+			sema <- struct{}{}
+			go func() {
 				demoFunc()
+				<-sema
 				wg.Done()
-				return nil
-			})
+			}()
 		}
 		wg.Wait()
 	}

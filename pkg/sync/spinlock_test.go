@@ -15,7 +15,7 @@ import (
 Benchmark result for three types of locks:
 	goos: darwin
 	goarch: arm64
-	pkg: github.com/panjf2000/ants/v2/pkg/sync
+	pkg: github.com/nelthaarion/ants/v2/pkg/sync
 	BenchmarkMutex-10              	10452573	       111.1 ns/op	       0 B/op	       0 allocs/op
 	BenchmarkSpinLock-10           	58953211	        18.01 ns/op	       0 B/op	       0 allocs/op
 	BenchmarkBackOffSpinLock-10    	100000000	        10.81 ns/op	       0 B/op	       0 allocs/op
@@ -39,10 +39,11 @@ func NewOriginSpinLock() sync.Locker {
 
 func BenchmarkMutex(b *testing.B) {
 	m := sync.Mutex{}
+	var value uint64
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			m.Lock()
-			//nolint:staticcheck
+			value++
 			m.Unlock()
 		}
 	})
@@ -50,10 +51,11 @@ func BenchmarkMutex(b *testing.B) {
 
 func BenchmarkSpinLock(b *testing.B) {
 	spin := NewOriginSpinLock()
+	var value uint64
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			spin.Lock()
-			//nolint:staticcheck
+			value++
 			spin.Unlock()
 		}
 	})
@@ -61,10 +63,11 @@ func BenchmarkSpinLock(b *testing.B) {
 
 func BenchmarkBackOffSpinLock(b *testing.B) {
 	spin := NewSpinLock()
+	var value uint64
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			spin.Lock()
-			//nolint:staticcheck
+			value++
 			spin.Unlock()
 		}
 	})

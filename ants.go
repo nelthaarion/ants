@@ -66,6 +66,9 @@ var (
 	// ErrInvalidPoolExpiry will be returned when setting a negative number as the periodic duration to purge goroutines.
 	ErrInvalidPoolExpiry = errors.New("invalid expiry for pool")
 
+	// ErrInvalidPoolSize is returned when a finite pool capacity cannot be represented safely.
+	ErrInvalidPoolSize = errors.New("invalid pool size")
+
 	// ErrPoolClosed will be returned when submitting task to a closed pool.
 	ErrPoolClosed = errors.New("this pool has been closed")
 
@@ -205,6 +208,9 @@ type poolCommon struct {
 }
 
 func newPool(size int, options ...Option) (*poolCommon, error) {
+	if size > math.MaxInt32 {
+		return nil, ErrInvalidPoolSize
+	}
 	if size <= 0 {
 		size = -1
 	}
@@ -361,6 +367,9 @@ func (p *poolCommon) Cap() int {
 
 // Tune changes the capacity of this pool, note that it is noneffective to the infinite or pre-allocation pool.
 func (p *poolCommon) Tune(size int) {
+	if size > math.MaxInt32 {
+		return
+	}
 	capacity := p.Cap()
 	if capacity == -1 || size <= 0 || size == capacity || p.options.PreAlloc {
 		return

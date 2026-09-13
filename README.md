@@ -8,7 +8,7 @@
 <a title="Tag" target="_blank" href="https://github.com/panjf2000/ants/tags"><img src="https://img.shields.io/github/v/tag/panjf2000/ants?color=%23ff8936&logo=fitbit&style=flat-square" /></a>
 <br/>
 <a title="Minimum Go Version" target="_blank" href="https://github.com/panjf2000/gnet"><img src="https://img.shields.io/badge/go-%3E%3D1.19-30dff3?style=flat-square&logo=go" /></a>
-<a title="Doc for ants" target="_blank" href="https://pkg.go.dev/github.com/panjf2000/ants/v2?tab=doc"><img src="https://img.shields.io/badge/go.dev-doc-007d9c?style=flat-square&logo=read-the-docs" /></a>
+<a title="Doc for ants" target="_blank" href="https://pkg.go.dev/github.com/nelthaarion/ants/v2?tab=doc"><img src="https://img.shields.io/badge/go.dev-doc-007d9c?style=flat-square&logo=read-the-docs" /></a>
 <a title="Mentioned in Awesome Go" target="_blank" href="https://github.com/avelino/awesome-go#goroutines"><img src="https://awesome.re/mentioned-badge-flat.svg" /></a>
 </p>
 
@@ -57,17 +57,17 @@ go get -u github.com/panjf2000/ants
 ### For `ants` v2 (with GO111MODULE=on)
 
 ```powershell
-go get -u github.com/panjf2000/ants/v2
+go get -u github.com/nelthaarion/ants/v2
 ```
 
 ## 🛠 How to use
-Check out [the examples](https://pkg.go.dev/github.com/panjf2000/ants/v2#pkg-examples) for basic usage.
+Check out [the examples](https://pkg.go.dev/github.com/nelthaarion/ants/v2#pkg-examples) for basic usage.
 
 ### Functional options for pool
 
 `ants.Options`contains all optional configurations of the ants pool, which allows you to customize the goroutine pool by invoking option functions to set up each configuration in `NewPool`/`NewPoolWithFunc`/`NewPoolWithFuncGeneric` method.
 
-Check out [ants.Options](https://pkg.go.dev/github.com/panjf2000/ants/v2#Options) and [ants.Option](https://pkg.go.dev/github.com/panjf2000/ants/v2#Option) for more details.
+Check out [ants.Options](https://pkg.go.dev/github.com/nelthaarion/ants/v2#Options) and [ants.Option](https://pkg.go.dev/github.com/nelthaarion/ants/v2#Option) for more details.
 
 ### Customize pool capacity
 

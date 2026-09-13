@@ -8,7 +8,7 @@
 <a title="Tag" target="_blank" href="https://github.com/panjf2000/ants/tags"><img src="https://img.shields.io/github/v/tag/panjf2000/ants?color=%23ff8936&logo=fitbit&style=flat-square" /></a>
 <br/>
 <a title="Minimum Go Version" target="_blank" href="https://github.com/panjf2000/gnet"><img src="https://img.shields.io/badge/go-%3E%3D1.19-30dff3?style=flat-square&logo=go" /></a>
-<a title="Doc for ants" target="_blank" href="https://pkg.go.dev/github.com/panjf2000/ants/v2?tab=doc"><img src="https://img.shields.io/badge/go.dev-doc-007d9c?style=flat-square&logo=read-the-docs" /></a>
+<a title="Doc for ants" target="_blank" href="https://pkg.go.dev/github.com/nelthaarion/ants/v2?tab=doc"><img src="https://img.shields.io/badge/go.dev-doc-007d9c?style=flat-square&logo=read-the-docs" /></a>
 <a title="Mentioned in Awesome Go" target="_blank" href="https://github.com/avelino/awesome-go#goroutines"><img src="https://awesome.re/mentioned-badge-flat.svg" /></a>
 </p>
 
@@ -57,17 +57,17 @@ go get -u github.com/panjf2000/ants
 ### 使用 `ants` v2 版本 (开启 GO111MODULE=on):
 
 ```powershell
-go get -u github.com/panjf2000/ants/v2
+go get -u github.com/nelthaarion/ants/v2
 ```
 
 ## 🛠 使用
-基本的使用请查看[示例](https://pkg.go.dev/github.com/panjf2000/ants/v2#pkg-examples).
+基本的使用请查看[示例](https://pkg.go.dev/github.com/nelthaarion/ants/v2#pkg-examples).
 
 ### Pool 配置
 
 通过在调用 `NewPool`/`NewPoolWithFunc`/`NewPoolWithFuncGeneric` 之时使用各种 optional function，可以设置 `ants.Options` 中各个配置项的值，然后用它来定制化 goroutine pool。
 
-更多细节请查看 [ants.Options](https://pkg.go.dev/github.com/panjf2000/ants/v2#Options) 和 [ants.Option](https://pkg.go.dev/github.com/panjf2000/ants/v2#Option)
+更多细节请查看 [ants.Options](https://pkg.go.dev/github.com/nelthaarion/ants/v2#Options) 和 [ants.Option](https://pkg.go.dev/github.com/nelthaarion/ants/v2#Option)
 
 
 ### 自定义 pool 容量

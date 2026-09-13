@@ -24,6 +24,7 @@ package ants_test
 
 import (
 	"context"
+	"errors"
 	"log"
 	"os"
 	"runtime"
@@ -279,6 +280,21 @@ func TestNoPool(t *testing.T) {
 	runtime.ReadMemStats(&mem)
 	curMem = mem.TotalAlloc/MiB - curMem
 	t.Logf("memory usage:%d MB", curMem)
+}
+
+func TestPoolRejectsUnrepresentableSize(t *testing.T) {
+	if _, err := ants.NewPool(int(^uint32(0)>>1) + 1); !errors.Is(err, ants.ErrInvalidPoolSize) {
+		t.Fatalf("expected ErrInvalidPoolSize, got %v", err)
+	}
+}
+
+func TestTuneRejectsUnrepresentableSize(t *testing.T) {
+	p, err := ants.NewPool(1, ants.WithDisablePurge(true))
+	require.NoError(t, err)
+	defer p.Release()
+
+	p.Tune(int(^uint32(0)>>1) + 1)
+	require.Equal(t, 1, p.Cap())
 }
 
 func TestAntsPool(t *testing.T) {

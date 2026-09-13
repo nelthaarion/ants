@@ -28,10 +28,9 @@ import (
 	"fmt"
 	"math"
 	"strings"
+	"sync"
 	"sync/atomic"
 	"time"
-
-	"golang.org/x/sync/errgroup"
 )
 
 // LoadBalancingStrategy represents the type of load-balancing algorithm.
@@ -51,25 +50,25 @@ type contextReleaser interface {
 
 func releasePools(ctx context.Context, pools []contextReleaser) error {
 	errCh := make(chan error, len(pools))
-	var wg errgroup.Group
+	var wg sync.WaitGroup
+	wg.Add(len(pools))
 	for i, pool := range pools {
-		func(p contextReleaser, idx int) {
-			wg.Go(func() error {
-				err := p.ReleaseContext(ctx)
-				if err != nil {
-					err = fmt.Errorf("pool %d: %v", idx, err)
-				}
-				errCh <- err
-				return err
-			})
+		go func(p contextReleaser, idx int) {
+			defer wg.Done()
+			err := p.ReleaseContext(ctx)
+			if err != nil {
+				err = fmt.Errorf("pool %d: %w", idx, err)
+			}
+			errCh <- err
 		}(pool, i)
 	}
 
-	_ = wg.Wait()
+	wg.Wait()
+	close(errCh)
 
 	var errStr strings.Builder
-	for i := 0; i < len(pools); i++ {
-		if err := <-errCh; err != nil {
+	for err := range errCh {
+		if err != nil {
 			errStr.WriteString(err.Error())
 			errStr.WriteString(" | ")
 		}
