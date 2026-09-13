@@ -28,7 +28,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/panjf2000/ants/v2"
+	"github.com/nelthaarion/ants/v2"
 )
 
 var (
